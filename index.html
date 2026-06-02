@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yazhnila Textiles - Premium E-Store</title>
+    
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .modal { display: none; }
+        .modal.active { display: flex; }
+        .bg-purple-premium { background-color: #4c1d95; }
+        .bg-sandal-premium { background-color: #fdf6e2; }
+        .text-purple-premium { color: #4c1d95; }
+        .border-purple-premium { border-color: #4c1d95; }
+        .bg-sandal-dark { background-color: #f3e8c9; }
+    </style>
+</head>
+<body class="bg-sandal-premium font-sans text-gray-800">
+
+    <div id="welcome-screen" class="fixed inset-0 bg-black/75 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 text-center border-4 border-purple-premium shadow-2xl space-y-5">
+            <div class="w-24 h-24 rounded-full mx-auto border-2 border-purple-premium overflow-hidden bg-sandal-premium">
+                <img src="logo.png" alt="Logo" class="w-full h-full object-cover" onerror="this.src='logo.png'">
+            </div>
+            <div class="space-y-2">
+                <h2 class="text-2xl font-black text-purple-premium tracking-wide">Welcome to Yazhnila!</h2>
+                <p class="text-sm font-medium italic text-gray-600">"Elegance in Every Thread, Tradition in Every Weave." ✨</p>
+            </div>
+            <button onclick="closeWelcome()" class="w-full bg-purple-premium text-white font-bold py-3 rounded-xl uppercase tracking-wider hover:bg-purple-900 transition shadow-lg flex items-center justify-center gap-2">
+                <i class="fa-solid fa-bag-shopping"></i> Enter Store
+            </button>
+        </div>
+    </div>
+
+    <header class="bg-purple-premium text-white sticky top-0 z-40 shadow-md py-3 px-4">
+        <div class="container mx-auto flex justify-between items-center max-w-6xl">
+            
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-white border border-amber-400 flex items-center justify-center shadow-sm overflow-hidden">
+                    <img src="logo.png" alt="Logo" class="w-full h-full object-cover">
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xl font-bold italic tracking-wide text-sandal-dark">Yazhnila</span>
+                    <span class="text-xs text-amber-300 italic font-medium">Explore <span class="font-bold text-white">Plus</span> <i class="fa-solid fa-plus text-[10px]"></i></span>
+                </div>
+            </div>
+
+            <div class="hidden md:flex items-center bg-white rounded-sm w-1/2 px-4 py-1.5 shadow-inner">
+                <input type="text" placeholder="Search for premium sarees, chudithars and more" class="w-full text-sm text-gray-800 focus:outline-none">
+                <i class="fa-solid fa-magnifying-glass text-purple-premium cursor-pointer"></i>
+            </div>
+
+            <div class="flex items-center gap-6 font-semibold">
+                <button onclick="openSignIn()" id="login-nav-btn" class="bg-white text-purple-premium px-6 py-1 rounded-sm text-sm font-bold shadow hover:bg-gray-100 transition">Sign In</button>
+                
+                <div onclick="toggleCartDrawer()" class="relative flex items-center gap-2 cursor-pointer text-white hover:text-amber-200 transition">
+                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                    <span class="text-sm hidden sm:inline">Cart</span>
+                    <span id="cart-count" class="absolute -top-2.5 -right-3 bg-amber-400 text-stone-900 text-[11px] font-extrabold px-1.5 py-0.5 rounded-full border border-purple-premium">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-6 max-w-6xl">
+        
+        <div class="bg-white p-4 rounded-xl shadow-md mb-6 border border-purple-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div>
+                <h3 class="text-base font-bold text-purple-premium flex items-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> Select Category:
+                </h3>
+            </div>
+            <div class="flex gap-2 w-full sm:w-auto">
+                <button onclick="filterCategory('all')" id="btn-all" class="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-lg border transition bg-purple-premium text-white border-purple-premium">Show All</button>
+                <button onclick="filterCategory('saree')" id="btn-saree" class="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-lg border transition bg-white text-purple-premium border-purple-300 hover:bg-sandal-premium">Sarees</button>
+                <button onclick="filterCategory('chudithar')" id="btn-chudithar" class="flex-1 sm:flex-none px-4 py-2 text-xs font-bold uppercase rounded-lg border transition bg-white text-purple-premium border-purple-300 hover:bg-sandal-premium">Chudithars</button>
+            </div>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="saree">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="saree1.jpeg" alt="Saree 1" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-purple-premium text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Saree</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA EXCLUSIVE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Premium Wine Red Silk Saree</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹1499</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Premium Wine Red Silk Saree', 1499, 'saree1.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Premium Wine Red Silk Saree', 1499)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="saree">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="saree2.jpeg" alt="Saree 2" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-purple-premium text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Saree</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA EXCLUSIVE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Classic Deep Purple Designer Saree</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹1699</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Classic Deep Purple Designer Saree', 1699, 'saree2.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Classic Deep Purple Designer Saree', 1699)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="saree">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="saree3.jpeg" alt="Saree 3" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-purple-premium text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Saree</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA EXCLUSIVE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Elegant Ethnic Floral Border Saree</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹1599</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Elegant Ethnic Floral Border Saree', 1599, 'saree3.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Elegant Ethnic Floral Border Saree', 1599)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="chudithar">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="chudithar1.jpeg" alt="Chudithar 1" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Chudithar</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA BOUTIQUE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Classic Dark Violet Kurti Set</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹799</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Classic Dark Violet Kurti Set', 799, 'chudithar1.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Classic Dark Violet Kurti Set', 799)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="chudithar">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="chudithar2.jpeg" alt="Chudithar 2" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Chudithar</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA BOUTIQUE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Vibrant Mustard Yellow Floral Dress</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹849</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Vibrant Mustard Yellow Floral Dress', 849, 'chudithar2.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Vibrant Mustard Yellow Floral Dress', 849)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="chudithar">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="chudithar3.jpeg" alt="Chudithar 3" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Chudithar</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA BOUTIQUE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Elegant Red & Cream Patterned Suit</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹899</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Elegant Red & Cream Patterned Suit', 899, 'chudithar3.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Elegant Red & Cream Patterned Suit', 899)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="chudithar">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="chudithar4.jpeg" alt="Chudithar 4" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Chudithar</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA BOUTIQUE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Premium Indigo Blue Floral Kurti</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹799</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Premium Indigo Blue Floral Kurti', 799, 'chudithar4.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Premium Indigo Blue Floral Kurti', 799)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="chudithar">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="chudithar 5.jpeg" alt="Chudithar 5" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Chudithar</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA BOUTIQUE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Stylish Ash Grey Ethnic Casual Kurti</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹749</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Stylish Ash Grey Ethnic Casual Kurti', 749, 'chudithar5.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Stylish Ash Grey Ethnic Casual Kurti', 749)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="chudithar">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="chudithar6.jpeg" alt="Chudithar 6" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Chudithar</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA BOUTIQUE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Rich Maroon Earthy Floral Set</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹899</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Rich Maroon Earthy Floral Set', 899, 'chudithar6.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Rich Maroon Earthy Floral Set', 899)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="product-card bg-white rounded-xl shadow-sm hover:shadow-md transition overflow-hidden border border-gray-200 p-4 flex flex-col justify-between" data-category="chudithar">
+                <div>
+                    <div class="bg-sandal-premium h-80 rounded-lg overflow-hidden flex items-center justify-center relative">
+                        <img src="chudithar7.jpeg" alt="Chudithar 7" class="w-full h-full object-cover">
+                        <span class="absolute top-2 left-2 bg-amber-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">Chudithar</span>
+                    </div>
+                    <div class="pt-4 space-y-1">
+                        <p class="text-[11px] font-bold text-purple-premium uppercase tracking-wider">YAZHNILA BOUTIQUE</p>
+                        <h3 class="text-sm md:text-base font-medium text-gray-900 truncate">Soft Pastel Pink Leaf Pattern Dress</h3>
+                        <div class="text-lg font-bold text-gray-900 pt-1">₹799</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-4 border-t mt-4">
+                    <button onclick="addItemToCart('Soft Pastel Pink Leaf Pattern Dress', 799, 'chudithar7.jpeg')" class="bg-amber-400 hover:bg-amber-500 text-stone-900 font-bold py-2 rounded-lg text-xs uppercase tracking-wider flex items-center justify-center gap-1"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                    <button onclick="openCheckout('Soft Pastel Pink Leaf Pattern Dress', 799)" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 rounded-lg text-xs uppercase tracking-wider"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="signin-modal" class="modal fixed inset-0 bg-black/60 items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl w-full max-w-sm shadow-2xl overflow-hidden border-2 border-purple-premium flex flex-col">
+            <div class="bg-purple-premium text-white p-4 flex justify-between items-center">
+                <h4 class="font-bold text-sm uppercase flex items-center gap-2"><i class="fa-solid fa-user-lock text-amber-300"></i> Account Sign In</h4>
+                <button onclick="closeSignIn()" class="text-white hover:text-gray-200 text-xl font-bold">&times;</button>
+            </div>
+            <div class="p-5 space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-500 mb-1">Email ID Address</label>
+                    <input type="email" id="signin-email" placeholder="name@domain.com" class="w-full text-sm p-2.5 border rounded focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-500 mb-1">Password</label>
+                    <input type="password" id="signin-pass" placeholder="••••••••" class="w-full text-sm p-2.5 border rounded focus:outline-none">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-gray-500 mb-1">Mobile Smartphone Number</label>
+                    <input type="tel" id="signin-phone" placeholder="10-digit number" class="w-full text-sm p-2.5 border rounded focus:outline-none">
+                </div>
+                <button onclick="executeLogin()" class="w-full bg-purple-premium hover:bg-purple-900 text-white font-bold py-2.5 rounded-lg text-xs uppercase tracking-wider shadow">Verify & Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-sidebar" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col border-l border-purple-200">
+        <div class="bg-purple-premium text-white p-4 flex justify-between items-center">
+            <h4 class="font-bold text-sm uppercase flex items-center gap-2"><i class="fa-solid fa-cart-flatbed-suitcases text-amber-300"></i> Your Cart Selection</h4>
+            <button onclick="toggleCartDrawer()" class="text-white text-xl font-bold">&times;</button>
+        </div>
+        <div id="cart-items-container" class="p-4 flex-1 overflow-y-auto space-y-3 bg-sandal-premium">
+            <p id="empty-cart-msg" class="text-center text-sm text-gray-500 font-medium py-10">Your cart is currently empty!</p>
+        </div>
+        <div class="bg-white border-t p-4 space-y-3 shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
+            <div class="flex justify-between items-center text-sm font-bold text-gray-900">
+                <span>Total Payable Amount:</span>
+                <span id="cart-total-price" class="text-purple-premium text-base">₹0</span>
+            </div>
+            <button onclick="checkoutEntireCart()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg text-xs uppercase tracking-wider text-center shadow">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <div id="checkout-modal" class="modal fixed inset-0 bg-black/60 items-center justify-center p-4 z-50 backdrop-blur-sm">
+        <div class="bg-white rounded-xl w-full max-w-md shadow-2xl overflow-hidden flex flex-col border-2 border-purple-premium">
+            <div class="bg-purple-premium text-white p-4 flex justify-between items-center">
+                <h4 class="font-bold tracking-wide flex items-center gap-2 text-sm"><i class="fa-solid fa-lock text-amber-300"></i> Yazhnila Secure Checkout</h4>
+                <button onclick="closeCheckout()" class="text-white text-xl font-bold">&times;</button>
+            </div>
+            <div class="bg-sandal-premium px-4 py-2.5 border-b text-xs text-purple-premium flex justify-between items-center font-bold">
+                <span id="modal-product-name" class="font-medium truncate max-w-[240px]">Product Selection</span>
+                <span id="modal-product-price" class="font-black text-sm">₹0</span>
+            </div>
+
+            <div id="step-address" class="p-5 space-y-4">
+                <div class="border-b pb-1.5 flex items-center justify-between">
+                    <h5 class="font-bold text-xs uppercase text-purple-premium">1. Shipping Address</h5>
+                    <span class="text-[11px] text-gray-400">Step 1 of 2</span>
+                </div>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1">Customer Full Name</label>
+                        <input type="text" id="cust-name" placeholder="Enter name" class="w-full text-sm p-2 border rounded focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1">Active Mobile Number</label>
+                        <input type="tel" id="cust-phone" placeholder="10-digit number" class="w-full text-sm p-2 border rounded focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-gray-500 mb-1">Complete Delivery Address</label>
+                        <textarea id="cust-addr" rows="3" placeholder="Door No, Street Name, City..." class="w-full text-sm p-2 border rounded focus:outline-none"></textarea>
+                    </div>
+                </div>
+                <button onclick="goToPayment()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-2.5 rounded-lg text-xs uppercase tracking-wider">Continue to Payment</button>
+            </div>
+
+            <div id="step-payment" class="p-5 space-y-4 hidden">
+                <div class="border-b pb-1.5 flex items-center justify-between">
+                    <h5 class="font-bold text-xs uppercase text-purple-premium">2. Payment Method</h5>
+                    <span class="text-[11px] text-gray-400">Step 2 of 2</span>
+                </div>
+                <div class="space-y-2.5">
+                    <label class="flex items-center justify-between p-3 border rounded-lg cursor-pointer bg-white">
+                        <div class="flex items-center gap-3">
+                            <input type="radio" name="payment" value="GPay" checked>
+                            <span class="text-sm font-semibold text-gray-800"><i class="fa-solid fa-qrcode text-blue-600"></i> UPI (Google Pay / PhonePe)</span>
+                        </div>
+                    </label>
+                    <label class="flex items-center justify-between p-3 border rounded-lg cursor-pointer bg-white">
+                        <div class="flex items-center gap-3">
+                            <input type="radio" name="payment" value="COD">
+                            <span class="text-sm font-semibold text-gray-800"><i class="fa-solid fa-hand-holding-dollar text-green-600"></i> Cash on Delivery (COD)</span>
+                        </div>
+                    </label>
+                </div>
+                <div class="flex gap-2 pt-3">
+                    <button onclick="backToAddress()" class="w-1/3 border border-gray-300 text-gray-600 py-2 rounded-lg text-xs uppercase">Back</button>
+                    <button onclick="confirmFinalOrder()" class="w-2/3 bg-purple-premium text-white font-bold py-2 rounded-lg text-xs uppercase shadow">Place Order</button>
+                </div>
+            </div>
+
+            <div id="step-success" class="p-8 hidden flex-col items-center justify-center text-center space-y-4 bg-white">
+                <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center text-green-600 text-3xl">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h5 class="text-xl font-bold text-gray-900">Order Placed Successfully!</h5>
+                <p class="text-sm text-green-600 font-semibold">Thank you for shopping with Yazhnila Textiles 🎉</p>
+                <button onclick="closeCheckout()" class="bg-purple-premium text-white font-bold py-2 px-6 rounded-lg text-xs uppercase tracking-wider">Continue Shopping</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cartItemsArray = [];
+        let globalUserSessionObject = null;
+
+        function closeWelcome() {
+            document.getElementById('welcome-screen').style.display = 'none';
+        }
+
+        // Category filtration
+        function filterCategory(category) {
+            const cards = document.querySelectorAll('.product-card');
+            const btns = ['all', 'saree', 'chudithar'];
+            btns.forEach(b => {
+                const btnEl = document.getElementById(`btn-${b}`);
+                if (b === category) {
+                    btnEl.classList.remove('bg-white', 'text-purple-premium');
+                    btnEl.classList.add('bg-purple-premium', 'text-white');
+                } else {
+                    btnEl.classList.remove('bg-purple-premium', 'text-white');
+                    btnEl.classList.add('bg-white', 'text-purple-premium');
+                }
+            });
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        // Authentication Triggers
+        function openSignIn() {
+            document.getElementById('signin-modal').classList.add('active');
+        }
+        function closeSignIn() {
+            document.getElementById('signin-modal').classList.remove('active');
+        }
+        function executeLogin() {
+            const mail = document.getElementById('signin-email').value.trim();
+            const pass = document.getElementById('signin-pass').value.trim();
+            const phone = document.getElementById('signin-phone').value.trim();
+
+            if(!mail || !pass || !phone) {
+                alert("Please fill up all requested fields!");
+                return;
+            }
+            
+            globalUserSessionObject = { email: mail, mobile: phone };
+            document.getElementById('login-nav-btn').innerText = "Hi, User";
+            document.getElementById('cust-name').value = "Verified Customer";
+            document.getElementById('cust-phone').value = phone;
+            
+            closeSignIn();
+            alert("Account verified and signed in successfully!");
+        }
+
+        // Sidebar Drawer Toggles
+        function toggleCartDrawer() {
+            const panel = document.getElementById('cart-sidebar');
+            if(panel.classList.contains('translate-x-full')) {
+                panel.classList.remove('translate-x-full');
+            } else {
+                panel.classList.add('translate-x-full');
+            }
+        }
+
+        // Cart Element Handlers
+        function addItemToCart(name, price, imgSource) {
+            cartItemsArray.push({ title: name, amount: price, image: imgSource });
+            refreshCartSidebarDisplayLayout();
+            alert(`"${name}" has been added to your cart!`);
+        }
+
+        function removeCartElementByIndex(index) {
+            cartItemsArray.splice(index, 1);
+            refreshCartSidebarDisplayLayout();
+        }
+
+        // Cart Element UI Renderer (Fixed with proper Image linking properties)
+        function refreshCartSidebarDisplayLayout() {
+            document.getElementById('cart-count').innerText = cartItemsArray.length;
+            const itemBucketContainer = document.getElementById('cart-items-container');
+            const placeholderMsg = document.getElementById('empty-cart-msg');
+            
+            itemBucketContainer.querySelectorAll('.live-cart-element-row').forEach(el => el.remove());
+
+            if(cartItemsArray.length === 0) {
+                placeholderMsg.style.display = 'block';
+                document.getElementById('cart-total-price').innerText = '₹0';
+                return;
+            }
+
+            placeholderMsg.style.display = 'none';
+            let calculatedRunningTotalSum = 0;
+
+            cartItemsArray.forEach((item, pointerIndex) => {
+                calculatedRunningTotalSum += item.amount;
+                
+                const cardRowElement = document.createElement('div');
+                cardRowElement.className = "live-cart-element-row bg-white p-3 rounded-lg border border-purple-100 flex items-center justify-between gap-3 shadow-sm";
+                cardRowElement.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <img src="${item.image}" class="w-12 h-12 rounded object-cover border" onerror="this.src='logo.png'">
+                        <div class="flex flex-col">
+                            <span class="text-xs font-bold text-gray-900 truncate max-w-[160px]">${item.title}</span>
+                            <span class="text-xs text-purple-premium font-extrabold">₹${item.amount}</span>
+                        </div>
+                    </div>
+                    <button onclick="removeCartElementByIndex(${pointerIndex})" class="text-red-500 hover:text-red-700 text-sm p-1"><i class="fa-regular fa-trash-can"></i></button>
+                `;
+                itemBucketContainer.appendChild(cardRowElement);
+            });
+
+            document.getElementById('cart-total-price').innerText = '₹' + calculatedRunningTotalSum;
+        }
+
+        function checkoutEntireCart() {
+            if(cartItemsArray.length === 0) {
+                alert("Your cart is empty!");
+                return;
+            }
+            toggleCartDrawer();
+            let aggregatedSummaryTitle = `${cartItemsArray.length} Items Selected`;
+            let totalBillPriceSum = parseInt(document.getElementById('cart-total-price').innerText.replace('₹',''));
+            openCheckout(aggregatedSummaryTitle, totalBillPriceSum);
+        }
+
+        // Checkout Modals Control Pipeline
+        function openCheckout(productName, price) {
+            document.getElementById('modal-product-name').innerText = productName;
+            document.getElementById('modal-product-price').innerText = '₹' + price;
+            document.getElementById('step-address').classList.remove('hidden');
+            document.getElementById('step-payment').classList.add('hidden');
+            document.getElementById('step-success').classList.add('hidden');
+            document.getElementById('checkout-modal').classList.add('active');
+        }
+
+        // Checkout Stepper Navigation Rules
+        function closeCheckout() { 
+            document.getElementById('checkout-modal').classList.remove('active'); 
+        }
+
+        function goToPayment() {
+            if(!document.getElementById('cust-name').value || !document.getElementById('cust-phone').value || !document.getElementById('cust-addr').value) {
+                alert("Please complete the shipping information fields!"); return;
+            }
+            document.getElementById('step-address').classList.add('hidden');
+            document.getElementById('step-payment').classList.remove('hidden');
+        }
+
+        function backToAddress() {
+            document.getElementById('step-payment').classList.add('hidden');
+            document.getElementById('step-address').classList.remove('hidden');
+        }
+
+        function confirmFinalOrder() {
+            document.getElementById('step-payment').classList.add('hidden');
+            document.getElementById('step-success').classList.remove('hidden');
+            cartItemsArray = [];
+            refreshCartSidebarDisplayLayout();
+        }
+    </script>
+</body>
+</html>
